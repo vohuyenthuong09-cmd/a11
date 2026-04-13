@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>MathVerse AI Toán 11 PRO</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:linear-gradient(#1e3c72,#2a5298);
+  color:white;
+  text-align:center;
+}
+.container{
+  max-width:1100px;
+  margin:20px auto;
+  background:rgba(0,0,0,0.4);
+  padding:20px;
+  border-radius:20px;
+}
+button{
+  margin:5px;
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  background:#ff6b6b;
+  color:white;
+  cursor:pointer;
+}
+textarea{
+  width:90%;
+  padding:10px;
+  border-radius:10px;
+  border:none;
+}
+.output{
+  background:#fff3cd;
+  color:#222;
+  padding:15px;
+  border-radius:10px;
+  text-align:left;
+  white-space:pre-line;
+  margin-top:10px;
+}
+canvas{
+  background:white;
+  border-radius:10px;
+  margin-top:10px;
+}
+.tab{display:none;}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🎮 MathVerse AI Toán 11</h1>
+
+<button onclick="showTab('learn')">📘 Học</button>
+<button onclick="showTab('solve')">🧠 Giải bài</button>
+<button onclick="showTab('test')">📝 Kiểm tra</button>
+<button onclick="showTab('draw')">📐 Vẽ hình</button>
+
+<!-- ================= HỌC ================= -->
+<div id="learn" class="tab">
+<h2>📘 AI Thầy giáo Toán 11</h2>
+<textarea id="learnInput" placeholder="Nhập: đạo hàm, hàm số..."></textarea>
+<br>
+<button onclick="teacherAI()">Học ngay</button>
+<div class="output" id="learnOutput"></div>
+</div>
+
+<!-- ================= GIẢI BÀI ================= -->
+<div id="solve" class="tab">
+<h2>🧠 Giải bài</h2>
+<textarea id="solveInput" placeholder="Nhập bài toán..."></textarea>
+<br>
+<button onclick="solveMath()">Giải</button>
+<div class="output" id="solveOutput"></div>
+</div>
+
+<!-- ================= KIỂM TRA ================= -->
+<div id="test" class="tab">
+<h2>📝 Kiểm tra</h2>
+<button onclick="generateQuiz()">Tạo đề</button>
+<div class="output" id="quizBox"></div>
+</div>
+
+<!-- ================= VẼ ================= -->
+<div id="draw" class="tab">
+<h2>📐 Vẽ hình không gian</h2>
+<textarea id="geoInput" placeholder="Nhập: hình chóp, thiết diện..."></textarea>
+<br>
+<button onclick="analyzeGeo()">Phân tích + Vẽ</button>
+<button onclick="clearCanvas()">Xoá</button>
+<div class="output" id="geoResult"></div>
+<canvas id="board" width="700" height="400"></canvas>
+</div>
+
+</div>
+
+<script>
+
+function showTab(id){
+  document.querySelectorAll(".tab").forEach(t=>t.style.display="none");
+  document.getElementById(id).style.display="block";
+}
+
+/* ================= HỌC ================= */
+function teacherAI(){
+
+  let input=document.getElementById("learnInput").value.toLowerCase();
+  let out="👨‍🏫 THẦY GIẢNG TOÁN 11\n\n";
+
+  if(input.includes("đạo hàm")){
+
+    out+="1. 📘 Lý thuyết:\nĐạo hàm là tốc độ biến thiên\n\n";
+    out+="2. 📌 Công thức:\n(x^n)' = n*x^(n-1)\n\n";
+    out+="3. ✏️ Ví dụ:\ny=x^2 → y'=2x\n\n";
+    out+="4. 📝 Bài tập:\nTính đạo hàm x^3\n👉 3x^2\n\n";
+    out+="5. 🚀 Nâng cao:\ny=x^3+2x → 3x^2+2\n\n";
+    out+="6. ❌ Sai lầm:\nQuên giảm số mũ\n\n";
+    out+="7. 🌍 Ứng dụng:\nTính vận tốc\n";
+  }
+
+  else if(input.includes("hàm số")){
+
+    out+="1. 📘 Lý thuyết:\nHàm số mô tả quan hệ x,y\n\n";
+    out+="2. 📌 Công thức:\ny=ax+b\n\n";
+    out+="3. ✏️ Ví dụ:\ny=2x+1\n\n";
+    out+="4. 📝 Bài tập:\nx=2 → y=5\n";
+  }
+
+  else{
+    out+="👉 Nhập: đạo hàm, hàm số...";
+  }
+
+  out+="\n\n👉 Em đã hiểu phần này chưa?";
+  document.getElementById("learnOutput").innerText=out;
+}
+
+/* ================= GIẢI BÀI ================= */
+function solveMath(){
+
+  let input=document.getElementById("solveInput").value.toLowerCase();
+  let out="👨‍🏫 THẦY GIẢI BÀI\n\n";
+
+  if(input.includes("x^2")){
+    out+="Bài: y=x^2\n";
+    out+="B1: áp dụng công thức\n";
+    out+="B2: y'=2x\n";
+  }
+  else{
+    out+="👉 Nhập rõ bài toán để thầy giải";
+  }
+
+  document.getElementById("solveOutput").innerText=out;
+}
+
+/* ================= KIỂM TRA ================= */
+function generateQuiz(){
+
+  let quiz=
+  "📝 ĐỀ KIỂM TRA\n\n"+
+  "1. Đạo hàm x^2?\nA.2x B.x C.3x\n\n"+
+  "2. y=2x+1, x=2 → ?\nA.3 B.5 C.4\n\n"+
+  "3. sin(0)=?\nA.0 B.1 C.-1\n\n"+
+  "4. C(5,2)=?\nA.10 B.5 C.20\n\n"+
+  "5. Dãy 2,4,6 là?\nA.CSC B.CSN\n\n"+
+  "👉 ĐÁP ÁN: 1A 2B 3A 4A 5A";
+
+  document.getElementById("quizBox").innerText=quiz;
+}
+
+/* ================= VẼ ================= */
+const canvas=document.getElementById("board");
+const ctx=canvas.getContext("2d");
+
+function clearCanvas(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+}
+function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
+function solid(){ctx.setLineDash([]);}
+function dashed(){ctx.setLineDash([6,6]);}
+
+async function drawPyramid(){
+
+  clearCanvas();
+
+  let A=[200,300],B=[450,300],C=[520,350],D=[270,350];
+  let S=[350,150];
+
+  dashed();
+  ctx.beginPath();
+  ctx.moveTo(...B);ctx.lineTo(...C);
+  ctx.moveTo(...C);ctx.lineTo(...D);
+  ctx.moveTo(...S);ctx.lineTo(...D);
+  ctx.stroke();
+
+  await sleep(300);
+
+  solid();
+  ctx.beginPath();
+  ctx.moveTo(...A);ctx.lineTo(...B);
+  ctx.moveTo(...A);ctx.lineTo(...D);
+  ctx.moveTo(...S);ctx.lineTo(...A);
+  ctx.moveTo(...S);ctx.lineTo(...B);
+  ctx.moveTo(...S);ctx.lineTo(...C);
+  ctx.stroke();
+}
+
+async function analyzeGeo(){
+
+  let text=document.getElementById("geoInput").value.toLowerCase();
+  let out="👨‍🏫 Phân tích hình\n";
+
+  if(text.includes("chóp")){
+    out+="Hình chóp\n";
+    await drawPyramid();
+  }
+
+  document.getElementById("geoResult").innerText=out;
+}
+
+</script>
+
+</body>
+</html>
